@@ -32,7 +32,7 @@ source in developer mode:
 
 1. Clone or download this repository.
    ```bash
-   git clone https://github.com/<your-username>/webimgscraper.git
+   git clone https://github.com/P0werK00kie/Wordpress-Image-Downloader.git
    ```
 2. Open `chrome://extensions` in Chrome.
 3. Toggle on **Developer mode** (top-right corner).
