@@ -162,21 +162,19 @@ async function buildAndDownloadZip(images, pageTitle, pageUrl, tabId) {
   }, null, 2));
 
   notify({ type: 'ZIP_PROGRESS', phase: 'Compressing', done: 0, total: 1 });
-  const zipBlob = await zip.generateAsync({ type: 'blob', compression: 'DEFLATE', compressionOptions: { level: 6 } });
+  // generate base64 (not 'blob') because MV3 service workers don't support
+  // URL.createObjectURL — a data: URL sidesteps the need for it entirely.
+  const zipBase64 = await zip.generateAsync({ type: 'base64', compression: 'DEFLATE', compressionOptions: { level: 6 } });
   notify({ type: 'ZIP_PROGRESS', phase: 'Compressing', done: 1, total: 1 });
 
   const zipFilename = `wp-images_${domainSlug}_${date}-${time}.zip`;
-  const blobUrl = URL.createObjectURL(zipBlob);
+  const dataUrl = `data:application/zip;base64,${zipBase64}`;
 
-  try {
-    await chrome.downloads.download({
-      url: blobUrl,
-      filename: zipFilename,
-      saveAs: false,
-    });
-  } finally {
-    setTimeout(() => URL.revokeObjectURL(blobUrl), 30000);
-  }
+  await chrome.downloads.download({
+    url: dataUrl,
+    filename: zipFilename,
+    saveAs: false,
+  });
 
   notify({
     type: 'ZIP_DONE',
