@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>WP Image Scraper</title>
+<link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <header>
+    <h1>WP Image Scraper</h1>
+    <div id="siteInfo" class="site-info">Scanning current tab…</div>
+  </header>
+
+  <section id="detectionBanner" class="banner banner-neutral">Checking for WordPress…</section>
+
+  <section id="summary" class="summary hidden">
+    <div class="stat"><span id="imgCount">0</span><label>images found</label></div>
+    <div class="stat"><span id="skippedCount">0</span><label>data-URI skipped</label></div>
+  </section>
+
+  <section class="actions">
+    <button id="rescanBtn" class="btn btn-secondary">Rescan Page</button>
+    <button id="downloadBtn" class="btn btn-primary" disabled>Download as ZIP</button>
+  </section>
+
+  <section id="progressSection" class="progress-section hidden">
+    <div class="progress-track"><div id="progressFill" class="progress-fill"></div></div>
+    <div id="progressText" class="progress-text">0 / 0</div>
+  </section>
+
+  <section id="resultSection" class="result hidden"></section>
+
+  <footer>
+    <label class="checkbox-row">
+      <input type="checkbox" id="includeBackgrounds" checked />
+      CSS background images
+    </label>
+    <label class="checkbox-row">
+      <input type="checkbox" id="forceNonWp" />
+      Scan anyway if not WordPress
+    </label>
+  </footer>
+
+  <script src="popup.js"></script>
+</body>
+</html>
